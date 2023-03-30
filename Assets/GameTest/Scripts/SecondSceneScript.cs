@@ -7,6 +7,7 @@ public class SecondSceneScript : MonoBehaviour
 {
 
     public DialogManager DialogManager;
+    [SerializeField] private GameObject MiniGame;
 
     private void Awake()
     {
@@ -19,8 +20,15 @@ public class SecondSceneScript : MonoBehaviour
         dialogTexts.Add(new DialogData("Use my sprite, leave me on a side of the screen, make a few animations", "Li"));
 
         dialogTexts.Add(new DialogData("And depending the actions of the mini-game change mi animation state, move me or do whatever crazy stuff you can think of!", "Li"));
+        
+        DialogData lastDialog = new DialogData("Are you /size:up/ready?", "Li");
 
-        dialogTexts.Add(new DialogData("After the player finishes the game, make me say something and move to the ThirdScene.", "Li"));
+        lastDialog.Callback = () =>
+        {
+               MiniGame.SetActive(true);
+        };
+
+        dialogTexts.Add(lastDialog);
         
         DialogManager.Show(dialogTexts);
     }

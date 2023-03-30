@@ -15,37 +15,60 @@ public class MiniGame : MonoBehaviour
     [SerializeField] private GameObject cone03;
         
     [SerializeField] private GameObject ball;
+    private int result;
 
     void OnEnable()
     {
         var dialogTexts = new List<DialogData>();
 
-        dialogTexts.Add(new DialogData("Are you /size:up/ready?", "Li"));
-        DialogData goMessage = new DialogData("3.../wait:1f/ 2.../wait:1f/ 1.../wait:1f/ GO! /emote:Happy/ ", "Li");
+        StartCoroutine(MiniGameRoutine());
+
+        DialogData goMessage = new DialogData("3.../wait:1/ 2.../wait:1/ 1.../wait:1/ GO!/size:init//emote:Happy//wait:2//emote:Normal//wait:4/", "Li");
         goMessage.isSkippable = false;
         
         dialogTexts.Add(goMessage);
 
-        StartCoroutine(MiniGameRoutine());
+        var gameResult = new DialogData("Where is the ball?", "Li");
+            gameResult.SelectList.Add("1", "In the left!");
+            gameResult.SelectList.Add("2", "I guess... center!");
+            gameResult.SelectList.Add("3", "I'm sure: right!");
+
+        gameResult.Callback = () => Check_MiniGameResult();
+
+        dialogTexts.Add(gameResult);
+
+
 
         dialogManager.Show(dialogTexts);
+    }
 
+    void Check_MiniGameResult()
+    {
+
+        controller.SetBool("end", true);
+
+        var dialogTexts = new List<DialogData>();
+
+        if (result.ToString() == dialogManager.Result)
+        {
+            dialogTexts.Add(new DialogData("That is /size:up//emote:Happy/correct!/size:init/", "Li"));
+        } else
+        {
+            dialogTexts.Add(new DialogData("That is... /emote:Sad/wrong, I'm sorry...", "Li"));
+        }
+
+        dialogTexts.Add(new DialogData("/emote:Normal/Let's continue"));
+
+        dialogManager.Show(dialogTexts);
     }
 
     IEnumerator MiniGameRoutine()
     {
         yield return new WaitForSeconds(5f);
-        controller.SetInteger("change", 1);
-        
-        yield return new WaitForSeconds(2f);
-        controller.SetInteger("change", 2);
+        result = Random.Range(1, 4);
 
-        yield return new WaitForSeconds(2f);
-        controller.SetInteger("change", 1);
+        controller.SetInteger("start", result);
 
-        yield return new WaitForSeconds(2f);
-        controller.SetInteger("change", 2);
-
-        yield return new WaitForEndOfFrame();
+        yield return new WaitForSeconds(6f);
     }
 }

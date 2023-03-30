@@ -16,18 +16,21 @@ public class FirstSceneScript : MonoBehaviour
         dialogTexts.Add(new DialogData($"Welcome to {rosa}my house{blanco}."));
 
         var Text1 = new DialogData("Do you like my place?", "Li");
-        Text1.SelectList.Add("Classic", "Yes, it's classic!");
-        Text1.SelectList.Add("Comfortable", "It is comfortable.");
-        Text1.SelectList.Add("Negative", "No... It's a bit small.");
-        Text1.Callback = () => Check_Correct();
+            Text1.SelectList.Add("Classic", "Yes, it's classic!");
+            Text1.SelectList.Add("Comfortable", "It is comfortable.");
+            Text1.SelectList.Add("Negative", "No... It's a bit small.");
+
+            Text1.Callback = () => Check_Correct();
+
         dialogTexts.Add(Text1);
+
         DialogManager.Show(dialogTexts);
          }
 
     private void Check_Correct()
     {
         var dialogTexts = new List<DialogData>();
-        Debug.Log(DialogManager.Result);
+
         switch (DialogManager.Result)
         {
             case "Classic":

@@ -58,6 +58,7 @@
   <ItemGroup>
     <Compile Include="Assets\DDSystem\Script\DialogBase.cs" />
     <Compile Include="Assets\GameTest\Scripts\SecondSceneScript.cs" />
+    <Compile Include="Assets\GameTest\Scripts\MiniGame.cs" />
     <Compile Include="Assets\GameTest\Scripts\FirstSceneScript.cs" />
     <Compile Include="Assets\DDSystem\Script\Character.cs" />
     <Compile Include="Assets\DDSystem\Demo\Scripts\TestMessage_Selection.cs" />
@@ -65,7 +66,6 @@
     <Compile Include="Assets\DDSystem\Script\DialogManager.cs" />
     <Compile Include="Assets\GameTest\Scripts\ThirdSceneScript.cs" />
     <Compile Include="Assets\DDSystem\Script\EmotionDrawer.cs" />
-    <Compile Include="Assets\GameTest\Scripts\MiniGame.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\DDSystem\Graphic\NANUM_LICENSE.txt" />
