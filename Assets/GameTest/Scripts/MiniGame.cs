@@ -3,18 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MiniGame : MonoBehaviour
 {
     [SerializeField] private DialogManager dialogManager;
 
     [SerializeField] private Animator controller;
-    
-    [SerializeField] private GameObject cone01;
-    [SerializeField] private GameObject cone02;
-    [SerializeField] private GameObject cone03;
-        
-    [SerializeField] private GameObject ball;
+
     private int result;
 
     void OnEnable()
@@ -37,31 +33,15 @@ public class MiniGame : MonoBehaviour
 
         dialogTexts.Add(gameResult);
 
-
-
         dialogManager.Show(dialogTexts);
     }
 
-    void Check_MiniGameResult()
-    {
-
-        controller.SetBool("end", true);
-
-        var dialogTexts = new List<DialogData>();
-
-        if (result.ToString() == dialogManager.Result)
-        {
-            dialogTexts.Add(new DialogData("That is /size:up//emote:Happy/correct!/size:init/", "Li"));
-        } else
-        {
-            dialogTexts.Add(new DialogData("That is... /emote:Sad/wrong, I'm sorry...", "Li"));
-        }
-
-        dialogTexts.Add(new DialogData("/emote:Normal/Let's continue"));
-
-        dialogManager.Show(dialogTexts);
-    }
-
+    /// <summary>
+    /// This Coroutine is timed to control the game animations when the character stops talking.
+    /// </summary>
+    /// <returns>
+    /// The neccessary time to wait until the game animations ends.
+    /// </returns>
     IEnumerator MiniGameRoutine()
     {
         yield return new WaitForSeconds(5f);
@@ -70,5 +50,38 @@ public class MiniGame : MonoBehaviour
         controller.SetInteger("start", result);
 
         yield return new WaitForSeconds(6f);
+    }
+
+    /// <summary>
+    /// Checks the answer given by the player and gives the character gives a proper answer. 
+    /// Saves the response and result of the game in the Response Manager.
+    /// Loads Third Scene when the last text ends.
+    /// </summary>
+    void Check_MiniGameResult()
+    {
+        controller.SetBool("end", true);
+
+        var dialogTexts = new List<DialogData>();
+
+        if (result.ToString() == dialogManager.Result) {
+            dialogTexts.Add(new DialogData("That is /size:up//emote:Happy/correct!/size:init/", "Li"));
+            ResponseManager.gameResult = true;
+        } else {
+            dialogTexts.Add(new DialogData("That is... /emote:Sad/wrong, I'm sorry...", "Li"));
+            ResponseManager.gameResult = false;
+        }
+
+        ResponseManager.gameResponse = dialogManager.Result;
+
+        DialogData lastText = new DialogData("/emote:Normal/Let's continue.");
+
+        lastText.Callback = () =>
+        {
+            SceneManager.LoadScene(2);
+        };
+
+        dialogTexts.Add(lastText);
+
+        dialogManager.Show(dialogTexts);
     }
 }
