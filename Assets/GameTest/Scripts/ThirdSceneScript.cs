@@ -6,26 +6,62 @@ using Doublsb.Dialog;
 public class ThirdSceneScript : MonoBehaviour
 {
     public DialogManager DialogManager;
-
+    private List<DialogData> dialogTexts;
     private void Awake()
     {
-        var dialogTexts = new List<DialogData>();
+        dialogTexts = new List<DialogData>();
 
-        dialogTexts.Add(new DialogData("Here I will inform you of the results in the previous Scenes.", "Li"));
+        dialogTexts.Add(new DialogData("/emote:Happy/That was fun!", "Li"));
 
-        dialogTexts.Add(new DialogData("You choose option A - B - C in the first scene.", "Li"));
+        switch (ResponseManager.firstResponse)
+        {
+            case "Classic":
+                dialogTexts.Add(new DialogData("You told me that my house is classic, /emote:Happy/you are super nice!", "Li"));
+            break;
+            case "Comfortable":
+                dialogTexts.Add(new DialogData("/emote:Normal/I hope you have been as comfortable as you found my house.", "Li"));
+            break;
+            case "Negative":
+                dialogTexts.Add(new DialogData("/emote:Sad/You said my house is small, but I forgive you, no problem.", "Li"));
+            break;
+        }
 
-        dialogTexts.Add(new DialogData("The outcome of the mini-game was 1 - 2 - 3.", "Li"));
+        string response = "";
 
-        dialogTexts.Add(new DialogData("So the result is of the game is A - B - C + 1 - 2 - 3.", "Li"));
+        switch (ResponseManager.gameResponse)
+        {
+            case "1":
+                response = "left";
+            break;
+            case "2":
+                response = "middle";
+            break; 
+            case "3":
+                response = "right";
+            break;
+        }
 
-        dialogTexts.Add(new DialogData("And that's basically it!", "Li"));
+        dialogTexts.Add(new DialogData($"/emote:Normal/Then, you've chose the {response} cup in my game and..."));
 
-        dialogTexts.Add(new DialogData("I hope you had fun in this little test! ", "Li"));
-
-        dialogTexts.Add(new DialogData("I'm looking forward to see what you're capable of!", "Li"));
-
+        if (ResponseManager.gameResult)
+        {
+            dialogTexts.Add(new DialogData("/emote:Happy/And you won my game! You are awesome! /sound:haha/Haha"));
+        }
+        else
+        {
+            dialogTexts.Add(new DialogData($"/emote:Sad/Sadly, you missed and lost my game..."));
+        }
         
+        dialogTexts.Add(new DialogData("/emote:Normal/Well, that's it. /emote:Happy/See you!"));
+
         DialogManager.Show(dialogTexts);
+    }
+
+    public void Update()
+    {
+        if (Input.anyKeyDown)
+        {
+            DialogManager.Click_Window();
+        }
     }
 }

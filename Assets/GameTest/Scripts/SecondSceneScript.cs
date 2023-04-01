@@ -14,8 +14,8 @@ public class SecondSceneScript : MonoBehaviour
         var dialogTexts = new List<DialogData>()
         {
             new DialogData("I'm going to hide a ball under a cup.", "Li"),
-            new DialogData("I'm going to mix them.", "Li"),
-            new DialogData("And the you arge going to guess where it is.", "Li"),
+            new DialogData("Then, I'm going to mix them.", "Li"),
+            new DialogData("And then you are going to guess where it is.", "Li"),
             new DialogData("/emote:Happy/Simple, right?", "Li"),
         };
         
@@ -29,5 +29,13 @@ public class SecondSceneScript : MonoBehaviour
         dialogTexts.Add(lastDialog);
         
         DialogManager.Show(dialogTexts);
+    }
+
+    public void Update()
+    {
+        if (Input.anyKeyDown)
+        {
+            DialogManager.Click_Window();
+        }
     }
 }

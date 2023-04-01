@@ -59,7 +59,7 @@ public class FirstSceneScript : MonoBehaviour
         // Saves the response to use it later
         ResponseManager.firstResponse = DialogManager.Result;
 
-        DialogData lastText = new DialogData("/emote:Happy/Let's play a geme!");
+        DialogData lastText = new DialogData("/emote:Happy/Let's play a game!");
 
         // Change the scene once the last dialog ends.
         lastText.Callback = () =>
@@ -69,5 +69,13 @@ public class FirstSceneScript : MonoBehaviour
 
         dialogTexts.Add(lastText);
         DialogManager.Show(dialogTexts);
+
     }
+        public void Update()
+        {
+            if (Input.anyKeyDown)
+            {
+                DialogManager.Click_Window();
+            }
+        }
 }

@@ -63,10 +63,10 @@
     <Compile Include="Assets\DDSystem\Script\Character.cs" />
     <Compile Include="Assets\DDSystem\Demo\Scripts\TestMessage_Selection.cs" />
     <Compile Include="Assets\DDSystem\Demo\Scripts\TestMessage.cs" />
+    <Compile Include="Assets\GameTest\Scripts\ResponseManager.cs" />
     <Compile Include="Assets\DDSystem\Script\DialogManager.cs" />
     <Compile Include="Assets\GameTest\Scripts\ThirdSceneScript.cs" />
     <Compile Include="Assets\DDSystem\Script\EmotionDrawer.cs" />
-    <Compile Include="Assets\GameTest\Scripts\ResponseManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\DDSystem\Graphic\NANUM_LICENSE.txt" />
